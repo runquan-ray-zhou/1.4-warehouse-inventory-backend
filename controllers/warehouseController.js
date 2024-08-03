@@ -1,6 +1,6 @@
 const express = require("express")
 const warehouses = express.Router()
-const { getAllWarehouses, getOneWarehouse } = require("../queries/warehouse.js")
+const { getAllWarehouses, getOneWarehouse, addNewWarehouse} = require("../queries/warehouse.js")
 
 
 //Route to get all warehouses
@@ -23,6 +23,12 @@ warehouses.get("/:id", async (req, res) => {
     } else {
         res.status(404).json({error: "server error"})
     }
+})
+
+//Route to add a warehouse to database
+warehouses.post("/add", async (req, res) => {
+    const newWarehouse = await addNewWarehouse(req.body);
+    res.status(200).json(newWarehouse)
 })
 
 module.exports = warehouses;
